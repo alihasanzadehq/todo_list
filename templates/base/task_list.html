@@ -1,0 +1,58 @@
+{% extends 'base/main.html ' %}
+
+
+{% block content %}
+
+
+
+<div class="header-bar" >
+    <div>
+        <h1>Hello {{request.user | title}} </h1>
+        <h3 style="margin: 0;" > You Have <i>{{count}}</i> incompelte task </h3>
+    </div>
+    {% if request.user.is_authenticated %}
+
+
+
+    <a href="{% url 'logout' %}">logout</a>
+
+{% else %}
+<a href="">Login</a>
+
+{% endif %}
+<hr>
+</div>
+
+<hr>
+<h1>My to do list {{color}}</h1>
+
+<a href="{% url 'task-craete' %}">Add Item</a>
+
+<form method="GET" >
+    <input type="text" name="saearch-area" value="{{serch_input}}">
+    <input type="submit" value="Seaech">
+</form>
+
+
+<table>
+
+    <tr>
+        <th>items</th>
+        <th></th>
+        <th></th>
+    </tr>
+
+    {% for task in tasks %}
+    <tr>
+        <td>{{task.title}}</td>
+        <td><a href="{% url 'task-update' task.id %}">Edit</a></td>
+        <td><a href="{% url 'task-delete' task.id %}">Delete</a></td>
+        
+    </tr>
+    {%empty%}
+        <h3>No Items in List</h3>
+    {% endfor %}
+</table>
+
+{% endblock content  %}
+
